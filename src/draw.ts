@@ -3,6 +3,7 @@
 
 //import modules
 import Ball from "./ball";
+import Force from './force';
 
 //extend existing window property, we have to put the draw and setup functinos of the global window object for p5 to work in global mode
 declare global {
@@ -20,7 +21,7 @@ let ball: Ball
 
 
 let preload = function() {
-    //model forces here
+    let gravityForce = new Force('Gravity', new p5.Vector(10,0));
 }
 
 let setup = function() {

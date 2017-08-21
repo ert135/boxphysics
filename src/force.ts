@@ -9,11 +9,15 @@ export default class Force {
     }
 
     public getVector() {
-        return this.forceVector;
+        return this.forceVector.copy();
     }
 
     public setVector(vector: p5.Vector) {
         this.forceVector = vector.copy();
+    }
+
+    public getName(): string {
+        return this.forceName;
     }
     
 }
