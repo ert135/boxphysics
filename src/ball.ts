@@ -9,6 +9,9 @@ export default class Ball {
     private magLimit: number;
     private mass: number;
     private acceleration: p5.Vector;
+    private r: number;
+    private g: number;
+    private b: number;
 
     constructor(initialPosition: p5.Vector, initialForces: Force[], radius: number) {
         this.radius = radius;
@@ -16,6 +19,7 @@ export default class Ball {
         this.position = initialPosition.copy();
         this.velocity = new p5.Vector(0,0);
         this.acceleration = new p5.Vector(0,0);
+        this.setColor()
 
         //copy forces sso we dont get reference problems;
         this.forces = initialForces.map((force: Force) => {
@@ -40,6 +44,12 @@ export default class Ball {
         })
     }
 
+    private setColor(): void {
+        this.r = random(255,1);
+        this.g = random(255,1);
+        this.b = random(255,1);
+    }
+
     public move() : void {
         this.acceleration.add(this.getSumForce());
         this.velocity.add(this.acceleration.copy());
@@ -60,6 +70,7 @@ export default class Ball {
     }
 
     public draw() : void {
+        fill(this.r, this.g, this.b, 127);
         ellipse(this.position.x, this.position.y, this.radius/2, this.radius/2);
     }
 
