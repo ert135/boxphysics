@@ -7,21 +7,44 @@ export default class Ball {
     private forces: Force[];
     private radius: number;
     private magLimit: number;
+    private mass: number;
+    private acceleration: p5.Vector;
 
-    constructor(initialPosition: p5.Vector, initialForces: Force[]) {
+    constructor(initialPosition: p5.Vector, initialForces: Force[], radius: number) {
+        this.radius = radius;
+        this.mass = radius * 0.5;
         this.position = initialPosition.copy();
+        this.velocity = new p5.Vector(0,0);
+        this.acceleration = new p5.Vector(0,0);
+
+        //copy forces sso we dont get reference problems;
         this.forces = initialForces.map((force: Force) => {
-            return force.getVector();
+            return new Force(force.getName(), force.getVector());
         });
     }
 
-    public addForce(force: Force): void {
-        this.forces.push(force);
+    public addForce(forceToAdd: Force): void {
+        //check for duplicate forces here
+        this.getForceNames().forEach((force: string) => {
+            if(force === forceToAdd.getName()){
+                return;
+            }
+        })
+
+        this.forces.push(forceToAdd);
+    }
+
+    private getForceNames(): string[]{
+        return this.forces.map((force) => {
+            return force.getName();
+        })
     }
 
     public move() : void {
-        this.velocity.add(this.getSumForce());
+        this.acceleration.add(this.getSumForce());
+        this.velocity.add(this.acceleration.copy());
         this.position.add(this.velocity);
+        this.acceleration.mult(0);
     }
 
     public removeForce(forceName: string): void {
@@ -32,12 +55,31 @@ export default class Ball {
 
     private getSumForce() : p5.Vector {
         return this.forces.reduce((sumOfForces: p5.Vector, currentForce: Force) => {
-            return sumOfForces.add(currentForce.getVector());
-        }, new p5.Vector(0,0));
+            return sumOfForces.add(currentForce.getVector()).div(this.mass);
+        }, new p5.Vector(0,0).copy());
     }
 
-    private draw() {
+    public draw() {
         ellipse(this.position.x, this.position.y, this.radius/2, this.radius/2);
+    }
+
+    public checkEdges = function() {
+        //need to change this to use collision detection
+        if (this.position.x < (0 + this.radius)) {
+            this.position.x = (0 + this.radius);
+            this.velocity.x *= -1;
+        }
+        if (this.position.x > (800 - this.radius)) {
+            this.position.x = (800 - this.radius);
+            this.velocity.x *= -1;
+        }
+
+        if (this.position.y < 0) {
+            this.velocity.y = this.velocity.y * 1;
+        } else if (this.position.y > (800 - this.radius)) {
+            this.velocity.y = this.velocity.y * -1;
+            this.position.y = (800 - this.radius)
+        }
     }
 
 }

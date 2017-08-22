@@ -18,19 +18,35 @@ declare global {
 }
 
 let ball: Ball
-
+let ballAmount = 10;
+let balls: Ball[] = [];
+let gravityAmount = 50;
 
 let preload = function() {
-    let gravityForce = new Force('Gravity', new p5.Vector(10,0));
+
 }
 
 let setup = function() {
+    let gravityForce = new Force('Gravity', new p5.Vector(0,gravityAmount));
+    for(var i=0; i < ballAmount; i++){
+        let randomX = Math.floor(Math.random() * 400) + 1;  
+        let randomY = Math.floor(Math.random() * 300) + 1;
+        let positionVector = new p5.Vector(randomX, randomY);
+        let randomRadius =  Math.floor(Math.random() * 140) + 80;
+        balls.push(new Ball(positionVector, [gravityForce], randomRadius));
+    }
     createCanvas(800, 800);
-
 }
 
 let draw = function() {
-
+    background("white");
+    stroke(0);
+    frameRate(50);
+    balls.forEach((ball) => {
+        ball.move();
+        ball.draw();
+        ball.checkEdges();
+    })  
 }
 
 let mouseClicked = function() {
