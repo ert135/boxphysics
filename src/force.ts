@@ -8,11 +8,11 @@ export default class Force {
         this.forceVector = forceVector;
     }
 
-    public getVector() {
+    public getVector() : p5.Vector {
         return this.forceVector.copy();
     }
 
-    public setVector(vector: p5.Vector) {
+    public setVector(vector: p5.Vector) : void {
         this.forceVector = vector.copy();
     }
 
