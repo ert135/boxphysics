@@ -3,7 +3,7 @@
 
 //import modules
 import Ball from "./ball";
-import Force from './force';
+import Gravity from './gravity';
 
 //extend existing window property, we have to put the draw and setup functinos of the global window object for p5 to work in global mode
 declare global {
@@ -20,14 +20,14 @@ declare global {
 let ball: Ball
 let ballAmount = 10;
 let balls: Ball[] = [];
-let gravityAmount = 50;
+let gravityAmount = 0.5;
 
 let preload = function() {
 
 }
 
 let setup = function() {
-    let gravityForce = new Force('Gravity', new p5.Vector(0,gravityAmount));
+    let gravityForce = new Gravity('Gravity', new p5.Vector(0,gravityAmount));
     for(var i=0; i < ballAmount; i++){
         let randomX = Math.floor(Math.random() * 400) + 1;  
         let randomY = Math.floor(Math.random() * 300) + 1;

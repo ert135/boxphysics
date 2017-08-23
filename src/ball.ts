@@ -15,7 +15,7 @@ export default class Ball {
 
     constructor(initialPosition: p5.Vector, initialForces: Force[], radius: number) {
         this.radius = radius;
-        this.mass = radius * 0.5;
+        this.mass = radius / 1.4;
         this.position = initialPosition.copy();
         this.velocity = new p5.Vector(0,0);
         this.acceleration = new p5.Vector(0,0);
@@ -23,7 +23,7 @@ export default class Ball {
 
         //copy forces sso we dont get reference problems;
         this.forces = initialForces.map((force: Force) => {
-            return new Force(force.getName(), force.getVector());
+            return force;
         });
     }
 
@@ -65,7 +65,7 @@ export default class Ball {
 
     private getSumForce() : p5.Vector {
         return this.forces.reduce((sumOfForces: p5.Vector, currentForce: Force) => {
-            return sumOfForces.add(currentForce.getVector()).div(this.mass);
+            return sumOfForces.add(currentForce.getVector(this)).div(this.mass);
         }, new p5.Vector(0,0).copy());
     }
 
@@ -93,4 +93,9 @@ export default class Ball {
         }
     }
 
+    public getMass(): number {
+        return this.mass;
+    }
+
 }
+

@@ -1,14 +1,14 @@
-export default class Force {
+export default abstract class Force {
 
-    private forceName: string;
-    private forceVector: p5.Vector
+    protected forceName: string;
+    protected forceVector: p5.Vector
 
     constructor(description: string, forceVector: p5.Vector) {
         this.forceName = description;
         this.forceVector = forceVector;
     }
 
-    public getVector() : p5.Vector {
+    public getVector(object:any) : p5.Vector {
         return this.forceVector.copy();
     }
 
