@@ -1,4 +1,4 @@
-import Force from './force';
+import Force from './forces/force';
 
 export default class Ball {
 
@@ -50,11 +50,17 @@ export default class Ball {
         this.b = random(255,1);
     }
 
-    public move() : void {
+    public move(allBalls: Ball[]) : void {
+        this.checkCollisions(allBalls);
         this.acceleration.add(this.getSumForce());
+        console.log(this.getSumForce().y);
         this.velocity.add(this.acceleration.copy());
         this.position.add(this.velocity);
         this.acceleration.mult(0);
+    }
+
+    private checkCollisions(balls: Ball[]): void {
+
     }
 
     public removeForce(forceName: string) : void {
@@ -63,7 +69,7 @@ export default class Ball {
         });
     }
 
-    private getSumForce() : p5.Vector {
+    public getSumForce() : p5.Vector {
         return this.forces.reduce((sumOfForces: p5.Vector, currentForce: Force) => {
             return sumOfForces.add(currentForce.getVector(this)).div(this.mass);
         }, new p5.Vector(0,0).copy());
@@ -95,6 +101,19 @@ export default class Ball {
 
     public getMass(): number {
         return this.mass;
+    }
+
+    public getAcceleration(): p5.Vector {
+        return this.acceleration.copy();
+    }
+
+    public getObjectForce(): p5.Vector   {
+        //newtons first law bitch
+        return this.acceleration.copy().mult(this.mass);
+    }
+
+    public getVelocity(): p5.Vector {
+        return this.velocity.copy();
     }
 
 }

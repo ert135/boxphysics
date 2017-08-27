@@ -1,5 +1,5 @@
 import Force from './force';
-import Ball from './ball';
+import Ball from '../ball';
 
 export default class Gravity extends Force {
   

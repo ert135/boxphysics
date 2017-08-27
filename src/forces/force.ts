@@ -7,10 +7,8 @@ export default abstract class Force {
         this.forceName = description;
         this.forceVector = forceVector;
     }
-
-    public getVector(object:any) : p5.Vector {
-        return this.forceVector.copy();
-    }
+    
+    public abstract getVector(object:any) : p5.Vector
 
     public setVector(vector: p5.Vector) : void {
         this.forceVector = vector.copy();

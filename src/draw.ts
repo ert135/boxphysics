@@ -1,9 +1,10 @@
 //import typescirpt types. 
 ///<reference path='../p5-global-mode.d.ts'/>
 
-//import modules
+//import forces
 import Ball from "./ball";
-import Gravity from './gravity';
+import Gravity from './forces/gravity';
+import airResistance from './forces/airResistance';
 
 //extend existing window property, we have to put the draw and setup functinos of the global window object for p5 to work in global mode
 declare global {
@@ -18,22 +19,20 @@ declare global {
 }
 
 let ball: Ball
-let ballAmount = 10;
+let ballAmount = 20;
 let balls: Ball[] = [];
-let gravityAmount = 0.5;
-
-let preload = function() {
-
-}
+let gravityAmount = 50;
+let airResistanceAmount = 600;
 
 let setup = function() {
-    let gravityForce = new Gravity('Gravity', new p5.Vector(0,gravityAmount));
-    for(var i=0; i < ballAmount; i++){
+    let gravityForce = new Gravity('Gravity', new p5.Vector(0, gravityAmount));
+    let airResistanceForce = new airResistance('airResistance', new p5.Vector(0, airResistanceAmount));
+    for(var i=0; i < ballAmount; i++) {
         let randomX = Math.floor(Math.random() * 400) + 1;  
         let randomY = Math.floor(Math.random() * 300) + 1;
         let positionVector = new p5.Vector(randomX, randomY);
-        let randomRadius =  Math.floor(Math.random() * 140) + 80;
-        balls.push(new Ball(positionVector, [gravityForce], randomRadius));
+        let randomRadius =  Math.floor(Math.random() * 50) + 80;
+        balls.push(new Ball(positionVector, [gravityForce, airResistanceForce], randomRadius));
     }
     createCanvas(800, 800);
 }
@@ -43,7 +42,7 @@ let draw = function() {
     stroke(0);
     frameRate(50);
     balls.forEach((ball) => {
-        ball.move();
+        ball.move(balls);
         ball.draw();
         ball.checkEdges();
     })  
@@ -53,7 +52,6 @@ let mouseClicked = function() {
 
 }
 
-window.preload = preload;
 window.setup = setup;
 window.draw = draw;
 window.mouseClicked = mouseClicked;
