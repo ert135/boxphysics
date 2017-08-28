@@ -19,7 +19,7 @@ declare global {
 }
 
 let ball: Ball
-let ballAmount = 2;
+let ballAmount = 4;
 let balls: Ball[] = [];
 let gravityAmount = 20;
 let airResistanceAmount = 600;
@@ -31,7 +31,7 @@ let setup = function() {
         let randomX = Math.floor(Math.random() * 400) + 1;  
         let randomY = Math.floor(Math.random() * 300) + 1;
         let positionVector = new p5.Vector(randomX, randomY);
-        let randomRadius =  Math.floor(Math.random() * 20) + 20;
+        let randomRadius =  Math.floor(Math.random() * 8) + 20;
         balls.push(new Ball(positionVector, [gravityForce, airResistanceForce], randomRadius));
     }
     createCanvas(800, 800);
