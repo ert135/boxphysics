@@ -1,8 +1,9 @@
 import Force from './forces/force';
+import collision from './forces/collision'
 
 export default class Ball {
 
-    private position: p5.Vector;
+    public position: p5.Vector;
     private velocity: p5.Vector;
     private forces: Force[];
     private radius: number;
@@ -50,17 +51,27 @@ export default class Ball {
         this.b = random(255,1);
     }
 
-    public move(allBalls: Ball[]) : void {
-        this.checkCollisions(allBalls);
+    public move() : void {
         this.acceleration.add(this.getSumForce());
-        console.log(this.getSumForce().y);
         this.velocity.add(this.acceleration.copy());
         this.position.add(this.velocity);
         this.acceleration.mult(0);
     }
 
-    private checkCollisions(balls: Ball[]): void {
+    public intersects(balls: Ball[]): void {
+        balls.forEach((ball: Ball) => {
+            let distance = dist(this.position.x, this.position.y, ball.position.x, ball.position.y);
+            //line(this.position.x, this.position.y, ball.position.x, ball.position.y)
+            if (distance < this.radius + ball.radius && (distance !== 0)) {
+                this.velocity.x *= -1 ;
+                this.velocity.y *= -1 ;
+                ball.velocity.x *= -1 ;
+                ball.velocity.y *= -1 ;
+            } else {
 
+
+            }
+        })
     }
 
     public removeForce(forceName: string) : void {
@@ -77,7 +88,7 @@ export default class Ball {
 
     public draw() : void {
         fill(this.r, this.g, this.b, 127);
-        ellipse(this.position.x, this.position.y, this.radius/2, this.radius/2);
+        ellipse(this.position.x, this.position.y, this.radius*2, this.radius*2);
     }
 
     public checkEdges() : void {
