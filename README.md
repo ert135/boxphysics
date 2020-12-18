@@ -1,6 +1,6 @@
 # Space colonization algorithm
 
-An implimintation of a space colonization algorithm, written in typescript using p5. 
+An implementation of a space colonization algorithm, written in typescript using p5. 
 
 ### To run:
 
