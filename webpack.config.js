@@ -1,8 +1,11 @@
+const path = require('path');
+
 module.exports = {
     entry: "./src/draw.ts",
     output: {
-        filename: "bundle.js",
-        path: __dirname + "/dist"
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: '/dist/',
+        filename: 'bundle.js'
     },
 
     // Enable sourcemaps for debugging webpack's output.
@@ -22,6 +25,11 @@ module.exports = {
             { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
         ]
     },
+
+    devServer: {
+        open: true,
+        writeToDisk: true,
+    }
 
     // When importing a module whose path matches one of the following, just
     // assume a corresponding global variable exists and use that instead.

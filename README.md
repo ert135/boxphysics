@@ -1,9 +1,14 @@
-# Space colonization algorithm
+# Simplew collision physics
 
-An implementation of a space colonization algorithm, written in typescript using p5. 
+An implementation of a simple elastic collision system
+
+https://en.wikipedia.org/wiki/Elastic_collision
+
+![collision](https://en.wikipedia.org/wiki/Elastic_collision#/media/File:Elastischer_sto%C3%9F_2D.gif)
+
+![alt text](balls_ss.png)
 
 ### To run:
 
-1. Run NPM install
-2. Run Webpack-dev-server
-3. Go to http://localhost:8080/
+1. npm install
+2. npm start

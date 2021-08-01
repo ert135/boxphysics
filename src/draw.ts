@@ -19,7 +19,7 @@ declare global {
 }
 
 let ball: Ball
-let ballAmount = 4;
+let ballAmount = 10;
 let balls: Ball[] = [];
 let gravityAmount = 20;
 let airResistanceAmount = 600;
@@ -49,10 +49,5 @@ let draw = function() {
     })  
 }
 
-let mouseClicked = function() {
-
-}
-
 window.setup = setup;
 window.draw = draw;
-window.mouseClicked = mouseClicked;
